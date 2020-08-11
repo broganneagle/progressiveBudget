@@ -1,6 +1,6 @@
 const FILES_TO_CACHE = ["/", "/db.js", "/index.html", "index.js", "/style.css"];
 
-const CACHE_NAME = "static-cache-v2";
+const CACHE_NAME = "static-cache-v1";
 const DATA_CACHE_NAME = "data-cache-v1";
 
 
@@ -13,24 +13,6 @@ self.addEventListener("install", function (evt) {
     );
 
     self.skipWaiting();
-});
-
-
-self.addEventListener("activate", function (evt) {
-    evt.waitUntil(
-        caches.keys().then(keyList => {
-            return Promise.all(
-                keyList.map(key => {
-                    if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-                        console.log("removing: ", key);
-                        return caches.delete(key);
-                    }
-                })
-            );
-        })
-    );
-
-    self.clients.claim();
 });
 
 self.addEventListener("fetch", evt => {
@@ -53,6 +35,22 @@ self.addEventListener("fetch", evt => {
         );
         return;
     }
+self.addEventListener("activate", function (evt) {
+    evt.waitUntil(
+        caches.keys().then(keyList => {
+            return Promise.all(
+                keyList.map(key => {
+                    if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
+                        console.log("removing: ", key);
+                        return caches.delete(key);
+                    }
+                })
+            );
+        })
+    );
+
+    self.clients.claim();
+});
 
     evt.respondWith(
         caches.open(CACHE_NAME).then(cache => {
