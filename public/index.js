@@ -1,11 +1,11 @@
 
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("service-worker.js").then(reg => {
-          console.log("Found sw file", reg);
-        });
-      });
-    }
+    // if ("serviceWorker" in navigator) {
+    //   window.addEventListener("load", () => {
+    //     navigator.serviceWorker.register("service-worker.js").then(reg => {
+    //       console.log("Found sw file", reg);
+    //     });
+    //   });
+    // }
   
 
 let transactions = [];
